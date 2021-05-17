@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-elivenowapp-dev-104741-authRole",
+      "UnauthRoleArn": "arn:aws:iam::150632175171:role/amplify-elivenowapp-dev-104741-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::150632175171:role/amplify-elivenowapp-dev-104741-authRole",
+      "Region": "ap-southeast-2",
+      "DeploymentBucketName": "amplify-elivenowapp-dev-104741-deployment",
+      "UnauthRoleName": "amplify-elivenowapp-dev-104741-unauthRole",
+      "StackName": "amplify-elivenowapp-dev-104741",
+      "StackId": "arn:aws:cloudformation:ap-southeast-2:150632175171:stack/amplify-elivenowapp-dev-104741/7e969c60-b6a9-11eb-961e-0a2bc827dcf8",
+      "AmplifyAppId": "d26dx4jdacad1q"
+    }
+  }
+}

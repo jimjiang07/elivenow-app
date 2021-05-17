@@ -15,9 +15,8 @@
 </template>
 
 <script>
-import { API } from 'aws-amplify';
-import { createTodo } from './graphql/mutations';
-import { listTodos } from './graphql/queries';
+import { DataStore } from '@aws-amplify/datastore';
+import { Todo } from './models';
 
 export default {
   name: 'App',
@@ -37,18 +36,14 @@ export default {
       if (!name || !description) return;
       const todo = { name, description };
       this.todos = [...this.todos, todo];
-      await API.graphql({
-        query: createTodo,
-        variables: { input: todo },
-      });
+      await DataStore.save(
+        new Todo(todo),
+      );
       this.name = '';
       this.description = '';
     },
     async getTodos() {
-      const todos = await API.graphql({
-        query: listTodos,
-      });
-      this.todos = todos.data.listTodos.items;
+      this.todos = await DataStore.query(Todo);
     },
   },
 };

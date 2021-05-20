@@ -1,50 +1,17 @@
 <template>
   <div id="app">
     <amplify-authenticator>
-      <h1>Todo App</h1>
-      <input type="text" v-model="name" placeholder="Todo name" />
-      <input type="text" v-model="description" placeholder="Todo description" />
-      <button v-on:click="createTodo">Create Todo</button>
-      <div v-for="item in todos" :key="item.id">
-        <h3>{{ item.name }}</h3>
-        <p>{{ item.description }}</p>
-      </div>
+      <class-planner></class-planner>
       <amplify-sign-out></amplify-sign-out>
     </amplify-authenticator>
   </div>
 </template>
 
 <script>
-import { DataStore } from '@aws-amplify/datastore';
-import { Todo } from './models';
+import ClassPlanner from './containers/ClassPlanner.vue';
 
 export default {
+  components: { ClassPlanner },
   name: 'App',
-  async created() {
-    this.getTodos();
-  },
-  data() {
-    return {
-      name: '',
-      description: '',
-      todos: [],
-    };
-  },
-  methods: {
-    async createTodo() {
-      const { name, description } = this;
-      if (!name || !description) return;
-      const todo = { name, description };
-      this.todos = [...this.todos, todo];
-      await DataStore.save(
-        new Todo(todo),
-      );
-      this.name = '';
-      this.description = '';
-    },
-    async getTodos() {
-      this.todos = await DataStore.query(Todo);
-    },
-  },
 };
 </script>

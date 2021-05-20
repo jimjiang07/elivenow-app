@@ -7,11 +7,14 @@ import { createApp } from 'vue';
 import aws_exports from './aws-exports';
 import App from './App.vue';
 
+import 'vue-datetime/dist/vue-datetime.css'
 import './main.css';
+
 
 Amplify.configure(aws_exports);
 applyPolyfills().then(() => {
   defineCustomElements(window);
 });
 
-createApp(App).mount('#app');
+const app = createApp(App);
+app.mount('#app');

@@ -7,6 +7,8 @@ import { createApp } from 'vue';
 import aws_exports from './aws-exports';
 import App from './App.vue';
 
+import './main.css';
+
 Amplify.configure(aws_exports);
 applyPolyfills().then(() => {
   defineCustomElements(window);

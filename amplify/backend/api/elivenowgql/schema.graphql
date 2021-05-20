@@ -1,6 +1,43 @@
-type Todo @model @auth(rules: [{allow: public}]) {
+type Teacher @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  firstName: String
+  lastName: String
+  mobile: String
+  avatar: AWSURL
+  classs: [ClassTeacher] @connection(keyName: "byTeacher", fields: ["id"])
+}
+
+type Class
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [create, delete, update] }
+      { allow: groups, groups: ["Admin"], operations: [create, delete, update] }
+    ]
+  ) {
+  id: ID!
+  name: String
+  description: String
+  fee: Float
+  startTime: AWSDateTime
+  endTime: AWSDateTime
+  Teachers: [ClassTeacher!] @connection(keyName: "byClass", fields: ["id"])
+}
+
+type Todo @model @auth(rules: [{ allow: public }]) {
   id: ID!
   name: String!
   description: String
 }
- 
+
+type ClassTeacher
+  @model(queries: null)
+  @key(name: "byClass", fields: ["classID", "teacherID"])
+  @key(name: "byTeacher", fields: ["teacherID", "classID"])
+  @auth(rules: [{ allow: public }, { allow: public }]) {
+  id: ID!
+  classID: ID!
+  teacherID: ID!
+  class: Class! @connection(fields: ["classID"])
+  teacher: Teacher! @connection(fields: ["teacherID"])
+}

@@ -21,7 +21,7 @@ type Class
   fee: Float
   startTime: AWSDateTime
   endTime: AWSDateTime
-  duration: Integer
+  duration: Int
   Teachers: [ClassTeacher!] @connection(keyName: "byClass", fields: ["id"])
 }
 

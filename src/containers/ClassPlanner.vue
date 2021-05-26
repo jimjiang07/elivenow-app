@@ -3,47 +3,14 @@
     <div class="p-8 bg-third">
       <h1 class="font-bold">CLASS PLANNER</h1>
     </div>
-    <div class="m-4 p-4 border-blue-500 border-4">
-      <input type="text" v-model="name" placeholder="Name" />
-      <input type="text" v-model="description" placeholder="Description" />
-      <input type="number" v-model="fee" placeholder="Fee" />
-      <date-picker mode="date" v-model="classDate" :min-date="today">
-        <template v-slot="{ inputValue, inputEvents }">
-          <input
-            class="bg-white border px-2 py-1 rounded"
-            :value="inputValue"
-            v-on="inputEvents"
-          />
-        </template>
-      </date-picker>
-      <date-picker mode="time" v-model="startTime" is24hr>
-        <template v-slot="{ inputValue, inputEvents }">
-          <input
-            class="bg-white border px-2 py-1 rounded"
-            :value="inputValue"
-            v-on="inputEvents"
-          />
-        </template>
-      </date-picker>
-      <date-picker mode="time" v-model="endTime" :min-date="startTime" is24hr>
-        <template v-slot="{ inputValue, inputEvents }">
-          <input
-            class="bg-white border px-2 py-1 rounded"
-            :value="inputValue"
-            v-on="inputEvents"
-          />
-        </template>
-      </date-picker>
-      <button
-        class="rounded-2xl border-4 p-2 border-purple-400"
-        v-on:click="createClass"
-      >
-        Create Class
-      </button>
-    </div>
-    <div class="m-8">
+    <div
+      :class="{
+        'ml-8': true,
+        'class-planner-content__with-side-bar-open': sideBarOpened,
+      }"
+    >
       <div
-        class="w-80 h-40 mr-4 p-4 rounded-md bg-secondary"
+        class="w-60 h-40 mt-4 mr-4 p-4 rounded-md bg-secondary"
         v-for="item in classList"
         :key="item.id"
       >
@@ -51,16 +18,18 @@
         <p>{{ item.startTime }}</p>
       </div>
     </div>
+    <side-bar v-if="sideBarOpened" />
   </div>
 </template>
 <script>
 import { DataStore } from '@aws-amplify/datastore';
-import { DatePicker } from 'v-calendar';
-import { DateTime } from "luxon";
+import { DateTime } from 'luxon';
 import { Class } from '../models';
+import SideBar from '../components/SideBar.vue';
+
 export default {
   components: {
-    DatePicker,
+    SideBar,
   },
   async created() {
     await this.getClasses();
@@ -76,6 +45,7 @@ export default {
       endTime: today,
       today,
       classes: [],
+      sideBarOpened: true,
     };
   },
   watch: {
@@ -89,10 +59,10 @@ export default {
       return this.classes.map((item) => {
         return {
           ...item,
-          startTime: DateTime.fromISO(item.startTime).toFormat('hh:mma')
-        }
-      })
-    }
+          startTime: DateTime.fromISO(item.startTime).toFormat('hh:mma'),
+        };
+      });
+    },
   },
   methods: {
     async createClass() {
@@ -118,4 +88,8 @@ export default {
   },
 };
 </script>
-<style></style>
+<style>
+.class-planner-content__with-side-bar-open {
+  margin-right: 430px;
+}
+</style>

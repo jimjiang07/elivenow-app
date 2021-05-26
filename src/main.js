@@ -7,7 +7,6 @@ import { createApp } from 'vue';
 import aws_exports from './aws-exports';
 import App from './App.vue';
 
-import 'vue-datetime/dist/vue-datetime.css'
 import './main.css';
 
 

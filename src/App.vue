@@ -1,8 +1,7 @@
 <template>
-  <div id="app">
+  <div id="app" class="font-mono">
     <amplify-authenticator>
       <class-planner></class-planner>
-      <amplify-sign-out></amplify-sign-out>
     </amplify-authenticator>
   </div>
 </template>
